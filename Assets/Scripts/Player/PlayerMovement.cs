@@ -1,0 +1,92 @@
+using FMODUnity;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class PlayerMovement : MonoBehaviour
+{
+    public CharacterController characterController;
+    
+    [Header("Movement")]
+    public float movementSpeed;
+    public float smoothingTime;
+
+    [Header("Jumping")]
+    public float jumpHeight;
+    public float ascentGravityMultiplier;
+    public float descentGravityMultiplier;
+
+    [Header("Audio")]
+    public EventReference jumpEvent;
+
+    private InputAction moveInputAction;
+    private InputAction jumpInputAction;
+    private Vector2 smoothedInput;
+    private Vector2 smoothingVelocity;
+    private Vector3 verticalVelocity;
+    private bool debugHovering;
+
+    private void Start()
+    {
+        moveInputAction = InputSystem.actions.FindAction("Move");
+        jumpInputAction = InputSystem.actions.FindAction("Jump");
+
+        Game.OnGameLost += () => enabled = false;
+        Game.OnGameWon += () => enabled = false;
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current.capsLockKey.wasPressedThisFrame)
+        {
+            debugHovering = !debugHovering;
+        }
+
+        if (debugHovering)
+        {
+            Vector3 motion = CalculateMovement() * 10;
+            characterController.Move(motion * Time.deltaTime);
+        }
+        else
+        {
+            Vector3 motion = CalculateMovement() + CalculateJump();
+            characterController.Move(motion * Time.deltaTime);
+        }
+    }
+
+    private Vector3 CalculateMovement()
+    {
+        Vector2 input = moveInputAction.ReadValue<Vector2>();
+        smoothedInput = Vector2.SmoothDamp(smoothedInput, input, ref smoothingVelocity, smoothingTime);
+        
+        Vector3 direction = transform.TransformDirection(smoothedInput.x, 0, smoothedInput.y);
+        direction = Vector3.ClampMagnitude(direction, 1);
+        
+        Vector3 motion = direction * movementSpeed;
+        return motion;
+    }
+
+    private Vector3 CalculateJump()
+    {
+        if (characterController.isGrounded && jumpInputAction.WasPerformedThisFrame())
+        {
+            if (jumpInputAction.WasPerformedThisFrame())
+            {
+                verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
+                RuntimeManager.PlayOneShot(jumpEvent);
+            }
+        }
+        else
+        {
+            if (verticalVelocity.y < 0)
+            {
+                verticalVelocity += Physics.gravity * (descentGravityMultiplier * Time.deltaTime);
+            }
+            else
+            {
+                verticalVelocity += Physics.gravity * (ascentGravityMultiplier * Time.deltaTime);
+            }
+        }
+
+        return verticalVelocity;
+    }
+}
