@@ -1,7 +1,6 @@
 using FMODUnity;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 public class DistanceToPath : MonoBehaviour
@@ -87,7 +86,7 @@ public class DistanceToPath : MonoBehaviour
                 RuntimeManager.PlayOneShot(enterSafeDistanceEvent);
             }
             
-            timeOutsideSafeArea -= Time.deltaTime * 2;
+            timeOutsideSafeArea -= Time.deltaTime * 3;
             timeOutsideSafeArea = Mathf.Max(0, timeOutsideSafeArea);
         }
 
