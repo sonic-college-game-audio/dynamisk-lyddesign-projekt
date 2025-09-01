@@ -2,6 +2,7 @@ using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[SelectionBase]
 public class PlayerMovement : MonoBehaviour
 {
     public CharacterController characterController;

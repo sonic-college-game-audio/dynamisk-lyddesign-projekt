@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{051521d7-2e83-4ca4-ba91-df330c1875fd}">
+		<property name="name">
+			<value>TimeOutsidePath</value>
+		</property>
+		<relationship name="folder">
+			<destination>{01f0f822-7306-4504-8c8b-68228986fcc3}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{0f5e0e7c-c4a1-469c-8877-b26f8f330284}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{0f5e0e7c-c4a1-469c-8877-b26f8f330284}">
+		<property name="isGlobal">
+			<value>true</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="isExposedRecursively">
+			<value>false</value>
+		</property>
+	</object>
+</objects>

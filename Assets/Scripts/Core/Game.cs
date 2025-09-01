@@ -45,7 +45,7 @@ public static class Game
         await SceneManager.LoadSceneAsync("TransitionScene", LoadSceneMode.Additive);
         Scene transitionScene = SceneManager.GetSceneByName("TransitionScene");
         
-        RuntimeManager.PlayOneShot("event:/GameStop");
+        RuntimeManager.PlayOneShot("event:/Game Flow/ScreenFadeOut");
         
         Transition transition = Object.FindFirstObjectByType<Transition>();
         await transition.FadeOut();

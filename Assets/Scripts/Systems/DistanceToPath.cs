@@ -1,6 +1,7 @@
 using FMODUnity;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 public class DistanceToPath : MonoBehaviour
@@ -8,14 +9,16 @@ public class DistanceToPath : MonoBehaviour
     public SplineContainer spline;
     public float maxDistance;
     public float maxTimeOutsideSafeArea;
-
+    
     [Header("Audio")]
-    public EventReference crossedDistanceThresholdEvent;
+    public EventReference enterSafeDistanceEvent;
+    public EventReference exitSafeDistanceEvent;
     [ParamRef] public string distanceToPathParameter;
+    [ParamRef] public string timeOutsidePathParameter;
     
     private Transform playerTransform;
     private float timeOutsideSafeArea;
-    private bool wasOutsideAreaLastFrame;
+    private bool wasOutsideSafeAreaLastFrame;
     private bool isTracking;
     
     public float NormalizedTimeOutsideSafeArea { get; private set; }
@@ -44,6 +47,7 @@ public class DistanceToPath : MonoBehaviour
         }
         
         playerTransform = player.transform;
+        RuntimeManager.StudioSystem.setParameterByName(timeOutsidePathParameter, 0);
         RuntimeManager.StudioSystem.setParameterByName(distanceToPathParameter, 0);
     }
 
@@ -63,9 +67,9 @@ public class DistanceToPath : MonoBehaviour
         IsOutsideSafeArea = distance > maxDistance;
         if (IsOutsideSafeArea)
         {
-            if (!wasOutsideAreaLastFrame)
+            if (!wasOutsideSafeAreaLastFrame)
             {
-                RuntimeManager.PlayOneShot(crossedDistanceThresholdEvent);
+                RuntimeManager.PlayOneShot(exitSafeDistanceEvent);
             }
             
             timeOutsideSafeArea += Time.deltaTime;
@@ -78,12 +82,18 @@ public class DistanceToPath : MonoBehaviour
         }
         else
         {
+            if (wasOutsideSafeAreaLastFrame)
+            {
+                RuntimeManager.PlayOneShot(enterSafeDistanceEvent);
+            }
+            
             timeOutsideSafeArea -= Time.deltaTime * 2;
             timeOutsideSafeArea = Mathf.Max(0, timeOutsideSafeArea);
         }
 
         NormalizedTimeOutsideSafeArea = Mathf.Clamp01(timeOutsideSafeArea / maxTimeOutsideSafeArea);
-        wasOutsideAreaLastFrame = IsOutsideSafeArea;
+        RuntimeManager.StudioSystem.setParameterByName(timeOutsidePathParameter, NormalizedTimeOutsideSafeArea);
+        wasOutsideSafeAreaLastFrame = IsOutsideSafeArea;
     }
 
     public void BeginTrackingDistanceToPath()

@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{86c551c6-b0e3-48e1-b076-a44b4c822b78}">
 		<property name="name">
-			<value>GameStop</value>
+			<value>ScreenFadeOut</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{7300ab8c-498f-4750-8bea-82d348668a07}</destination>
+			<destination>{d28b912c-d199-4b04-9279-fb16c708ecfe}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{84d9ab70-c936-4dd0-9ad3-0398d4c88cb4}</destination>

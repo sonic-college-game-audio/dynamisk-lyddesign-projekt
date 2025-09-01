@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{ef15a9c6-bfa7-486d-b7a3-f1d56f122f05}">
 		<property name="name">
-			<value>ReachedEndGate</value>
+			<value>EnterEndGate</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{7300ab8c-498f-4750-8bea-82d348668a07}</destination>
+			<destination>{45e1d7ae-802f-4f4d-9f86-a6248bbbf418}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{195ad54b-4f3f-478b-8531-e1aa7b43a9fe}</destination>

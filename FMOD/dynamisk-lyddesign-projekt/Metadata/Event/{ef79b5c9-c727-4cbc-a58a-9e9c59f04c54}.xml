@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{ef79b5c9-c727-4cbc-a58a-9e9c59f04c54}">
 		<property name="name">
-			<value>GameStart</value>
+			<value>EnterStartGate</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
 		</property>
 		<relationship name="folder">
-			<destination>{7300ab8c-498f-4750-8bea-82d348668a07}</destination>
+			<destination>{45e1d7ae-802f-4f4d-9f86-a6248bbbf418}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{0482051c-9728-49bd-8659-2515418eab9f}</destination>

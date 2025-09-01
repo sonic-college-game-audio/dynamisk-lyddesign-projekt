@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c495b29f-982c-48ed-8bed-56ef0c48c72a}">
+		<property name="assetPath">
+			<value>EnterSafeDistance.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.5</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{54b7c393-9884-47b8-bac4-4a33289b7775}</destination>
+		</relationship>
+	</object>
+</objects>
