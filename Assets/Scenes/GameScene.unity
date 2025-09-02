@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 330585546}
-  sensitivity: 0.1
+  sensitivity: 0.5
 --- !u!114 &499705296
 MonoBehaviour:
   m_ObjectHideFlags: 0
