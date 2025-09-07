@@ -14,8 +14,6 @@ public class PlayerLook : MonoBehaviour
         Cursor.visible = false;
         
         lookInputAction = InputSystem.actions.FindAction("Look");
-
-        Game.OnGameLost += () => enabled = false;
     }
 
     private void Update()

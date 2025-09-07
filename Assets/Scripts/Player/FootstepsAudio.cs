@@ -53,6 +53,11 @@ public class FootstepsAudio : MonoBehaviour
     
     private void PlayLandingEvent()
     {
+        if (Time.timeSinceLevelLoad < 0.5f)
+        {
+            return;
+        }
+        
         if (characterController.isGrounded && !wasGroundedLastFrame)
         {
             RuntimeManager.PlayOneShot(landingEvent);

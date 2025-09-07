@@ -3,7 +3,6 @@ using UnityEngine;
 public class EndGate : MonoBehaviour
 {
     public DistanceToPath distanceToPath;
-    public float timeUntilRestart;
 
     private bool hasBeenTriggered;
     
@@ -19,15 +18,8 @@ public class EndGate : MonoBehaviour
             return;
         }
         
+        Game.currentLevel.ReportEnterEndGate();
         distanceToPath.enabled = false;
         hasBeenTriggered = true;
-
-        EndGameAfterDelay().Run();
-    }
-
-    private async Awaitable EndGameAfterDelay()
-    {
-        await Awaitable.WaitForSecondsAsync(timeUntilRestart);
-        Game.ReportGameWon();
     }
 }

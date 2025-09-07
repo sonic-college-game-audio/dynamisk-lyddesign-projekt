@@ -19,5 +19,6 @@ public class StartGate : MonoBehaviour
         }
         
         distanceToPath.BeginTrackingDistanceToPath();
+        Game.currentLevel.ReportEnterStartGate();
     }
 }

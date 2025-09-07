@@ -30,9 +30,6 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInputAction = InputSystem.actions.FindAction("Move");
         jumpInputAction = InputSystem.actions.FindAction("Jump");
-
-        Game.OnGameLost += () => enabled = false;
-        Game.OnGameWon += () => enabled = false;
     }
 
     private void Update()

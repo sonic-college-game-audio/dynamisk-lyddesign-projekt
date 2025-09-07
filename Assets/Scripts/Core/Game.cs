@@ -1,4 +1,3 @@
-using System;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,35 +8,21 @@ using Object = UnityEngine.Object;
 // when the game is won or lost.
 public static class Game
 {
-    public static event Action OnGameLost;
-    public static event Action OnGameWon; 
-    
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    public static Level currentLevel;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Initialize()
     {
-        OnGameLost = null;
-        OnGameWon = null;
-        
         InputSystem.actions.Enable();
     }
 
-    public static void ReportGameLost()
+    public static void ReloadLevel()
     {
-        OnGameLost?.Invoke();
-        ReloadAsync().Run();
-    }
-    
-    public static void ReportGameWon()
-    {
-        OnGameWon?.Invoke();
         ReloadAsync().Run();
     }
 
     private static async Awaitable ReloadAsync()
     {
-        OnGameLost = null;
-        OnGameWon = null;
-        
         Scene gameScene = SceneManager.GetActiveScene();
         string gameSceneName = gameScene.name;
         

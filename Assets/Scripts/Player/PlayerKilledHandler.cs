@@ -1,9 +1,11 @@
 using FMODUnity;
 using UnityEngine;
 
-public class PlayerDeathHandler : MonoBehaviour
+public class PlayerKilledHandler : MonoBehaviour
 {
     public CharacterController characterController;
+    public PlayerMovement playerMovement;
+    public PlayerMovement playerLook;
     public Rigidbody cameraRigidbody;
     public float fallForce;
 
@@ -13,12 +15,15 @@ public class PlayerDeathHandler : MonoBehaviour
     private void Start()
     {
         Physics.IgnoreCollision(characterController, cameraRigidbody.GetComponent<Collider>());
-        Game.OnGameLost += OnGameLost;
+        Game.currentLevel.OnPlayerKilled += OnPlayerKilled;
     }
 
-    private void OnGameLost()
+    private void OnPlayerKilled()
     {
         RuntimeManager.PlayOneShot(deathEvent);
+
+        playerMovement.enabled = false;
+        playerLook.enabled = false;
         
         cameraRigidbody.isKinematic = false;
         cameraRigidbody.AddTorque(transform.right * fallForce, ForceMode.Impulse);
