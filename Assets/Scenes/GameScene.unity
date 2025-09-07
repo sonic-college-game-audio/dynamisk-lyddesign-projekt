@@ -2994,7 +2994,7 @@ GameObject:
   - component: {fileID: 1271787784}
   - component: {fileID: 1271787783}
   m_Layer: 0
-  m_Name: Lifecycle Handlers
+  m_Name: Event Handlers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3039,6 +3039,13 @@ MonoBehaviour:
       Data3: 1693486505
       Data4: 1628947298
     Path: event:/Game Flow/Killed
+  killedSnapshot:
+    Guid:
+      Data1: 1663152874
+      Data2: 1268329421
+      Data3: -1632567129
+      Data4: 1511238357
+    Path: snapshot:/Killed
 --- !u!114 &1271787784
 MonoBehaviour:
   m_ObjectHideFlags: 0

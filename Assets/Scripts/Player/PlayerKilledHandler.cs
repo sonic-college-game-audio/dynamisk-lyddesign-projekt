@@ -1,3 +1,5 @@
+using System;
+using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
 
@@ -11,6 +13,9 @@ public class PlayerKilledHandler : MonoBehaviour
 
     [Header("Audio")]
     public EventReference deathEvent;
+    public EventReference killedSnapshot;
+
+    private EventInstance killedSnapshotEventInstance;
     
     private void Start()
     {
@@ -18,9 +23,19 @@ public class PlayerKilledHandler : MonoBehaviour
         Game.currentLevel.OnPlayerKilled += OnPlayerKilled;
     }
 
+    private void OnDestroy()
+    {
+        if (killedSnapshotEventInstance.isValid())
+        {
+            killedSnapshotEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+        }
+    }
+
     private void OnPlayerKilled()
     {
         RuntimeManager.PlayOneShot(deathEvent);
+        killedSnapshotEventInstance = RuntimeManager.CreateInstance(killedSnapshot);
+        killedSnapshotEventInstance.start();
 
         playerMovement.enabled = false;
         playerLook.enabled = false;
