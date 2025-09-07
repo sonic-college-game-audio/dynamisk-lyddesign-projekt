@@ -1,4 +1,3 @@
-using System;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
@@ -6,8 +5,6 @@ using UnityEngine;
 public class PlayerKilledHandler : MonoBehaviour
 {
     public CharacterController characterController;
-    public PlayerMovement playerMovement;
-    public PlayerMovement playerLook;
     public Rigidbody cameraRigidbody;
     public float fallForce;
 
@@ -38,8 +35,7 @@ public class PlayerKilledHandler : MonoBehaviour
         killedSnapshotEventInstance = RuntimeManager.CreateInstance(killedSnapshot);
         killedSnapshotEventInstance.start();
 
-        playerMovement.enabled = false;
-        playerLook.enabled = false;
+        Game.DisablePlayerInput();
         
         cameraRigidbody.isKinematic = false;
         cameraRigidbody.AddTorque(transform.right * fallForce, ForceMode.Impulse);

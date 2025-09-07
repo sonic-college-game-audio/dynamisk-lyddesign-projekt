@@ -11,6 +11,7 @@ public class UnlockCutscene : MonoBehaviour
     public Renderer gateRenderer;
     public Collider gateCollider;
     public Renderer[] progressIndicators;
+    public GameObject pickupVisualsPrefab;
     
     [Header("Settings")]
     public float startDistance;
@@ -27,7 +28,7 @@ public class UnlockCutscene : MonoBehaviour
     
     private void Start()
     {
-        Pickup.OnPickedUp += OnPickedUp;
+        Pickup.OnArrivedAtGate += OnArrivedAtGate;
         
         cameraTransform.gameObject.SetActive(false);
         cinematicBars.SetActive(false);
@@ -35,22 +36,23 @@ public class UnlockCutscene : MonoBehaviour
     
     private void OnDestroy()
     {
-        Pickup.OnPickedUp -= OnPickedUp;
+        Pickup.OnArrivedAtGate -= OnArrivedAtGate;
     }
 
-    private void OnPickedUp()
+    private void OnArrivedAtGate()
     {
-        PlayCutscene().Run();
+        PlayCutsceneAsync().Run();
     }
 
-    private async Awaitable PlayCutscene()
+    private async Awaitable PlayCutsceneAsync()
     {
-        await Awaitable.WaitForSecondsAsync(0.5f);
+        Game.currentLevel.ReportCutsceneStart();
         
         RuntimeManager.PlayOneShot(cutsceneEvent);
         cameraTransform.gameObject.SetActive(true);
         cinematicBars.SetActive(true);
-        Time.timeScale = 0;
+        
+        Game.DisablePlayerInput();
         
         Vector3 startCameraLocalPosition = cameraTransform.localPosition;
         startCameraLocalPosition.z = startDistance;
@@ -58,9 +60,16 @@ public class UnlockCutscene : MonoBehaviour
         Vector3 targetCameraLocalPosition = cameraTransform.localPosition;
         targetCameraLocalPosition.z = targetDistance;
 
+        GameObject pickupInstance = Instantiate(pickupVisualsPrefab, progressIndicators[pickupCount].transform.parent);
+        pickupInstance.transform.localPosition = Vector3.back * 5;
+        pickupInstance.transform.localScale = Vector3.one * 0.5f;
+        
         float t = 0;
         while (t < 1)
         {
+            float pickupTime = Mathf.Clamp01(t * 2);
+            pickupInstance.transform.localPosition = Vector3.Lerp(Vector3.back * 5, Vector3.zero, curve.Evaluate(pickupTime));
+            
             if (t > 0.6f && progressIndicators[pickupCount].sharedMaterial != activeProgressIndicatorMaterial)
             {
                 RuntimeManager.PlayOneShot(progressIndicatorEvent);
@@ -69,7 +78,7 @@ public class UnlockCutscene : MonoBehaviour
                 if (pickupCount == 2)
                 {
                     RuntimeManager.PlayOneShot(gateUnlocksEvent);
-                    _ = ChangeGateMaterial();
+                    _ = ChangeGateMaterialAsync();
                     gateCollider.isTrigger = true;
                 }
             }
@@ -88,10 +97,11 @@ public class UnlockCutscene : MonoBehaviour
         
         cameraTransform.gameObject.SetActive(false);
         cinematicBars.SetActive(false);
-        Time.timeScale = 1;
+        Game.EnablePlayerInput();
+        Game.currentLevel.ReportCutsceneEnd();
     }
 
-    private async Awaitable ChangeGateMaterial()
+    private async Awaitable ChangeGateMaterialAsync()
     {
         Material a = gateRenderer.sharedMaterial;
         Material b = openGateMaterial;

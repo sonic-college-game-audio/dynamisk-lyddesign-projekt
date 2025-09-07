@@ -7,13 +7,17 @@ public class Level : MonoBehaviour
     public event Action OnPlayerWon;
     public event Action OnEnterStartGate;
     public event Action OnEnterEndGate;
-    
+
+    public Transform playerTransform;
     public float waitAfterKilled;
     public float waitAfterWon;
-
+    
+    public bool IsShowingCutscene { get; private set; }
+    
     private void Awake()
     {
         Game.currentLevel = this;
+        playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
     public void ReportEnterStartGate()
@@ -30,6 +34,16 @@ public class Level : MonoBehaviour
     public void ReportPlayerKilled()
     {
         ReportPlayerKilledAsync().Run();
+    }
+
+    public void ReportCutsceneStart()
+    {
+        IsShowingCutscene = true;
+    }
+
+    public void ReportCutsceneEnd()
+    {
+        IsShowingCutscene = false;
     }
     
     private async Awaitable ReportPlayerKilledAsync()

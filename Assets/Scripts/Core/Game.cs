@@ -13,9 +13,19 @@ public static class Game
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Initialize()
     {
+        EnablePlayerInput();
+    }
+
+    public static void EnablePlayerInput()
+    {
         InputSystem.actions.Enable();
     }
 
+    public static void DisablePlayerInput()
+    {
+        InputSystem.actions.Disable();
+    }
+    
     public static void ReloadLevel()
     {
         ReloadAsync().Run();
@@ -33,7 +43,9 @@ public static class Game
         RuntimeManager.PlayOneShot("event:/Game Flow/ScreenFadeOut");
         
         Transition transition = Object.FindFirstObjectByType<Transition>();
-        await transition.FadeOut();
+        await transition.FadeOutAsync();
+        
+        DisablePlayerInput();
         
         // Reload game scene
         await SceneManager.UnloadSceneAsync(gameScene);
@@ -41,7 +53,9 @@ public static class Game
         gameScene = SceneManager.GetSceneByName(gameSceneName);
         SceneManager.SetActiveScene(gameScene);
         
-        await transition.FadeIn();
+        EnablePlayerInput();
+        
+        await transition.FadeInAsync();
         await SceneManager.UnloadSceneAsync(transitionScene);
     }
 }

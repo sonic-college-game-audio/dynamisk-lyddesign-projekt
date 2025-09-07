@@ -15,7 +15,7 @@ public class Transition : MonoBehaviour
         image.color = color;
     }
 
-    public async Awaitable FadeOut()
+    public async Awaitable FadeOutAsync()
     {
         Color color = image.color;
         float time = 0;
@@ -33,7 +33,7 @@ public class Transition : MonoBehaviour
         await Awaitable.WaitForSecondsAsync(waitTimeWhileCovered);
     }
 
-    public async Awaitable FadeIn()
+    public async Awaitable FadeInAsync()
     {
         Color color = image.color;
         float time = 0;

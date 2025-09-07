@@ -53,7 +53,7 @@ public class FootstepsAudio : MonoBehaviour
     
     private void PlayLandingEvent()
     {
-        if (Time.timeSinceLevelLoad < 0.5f)
+        if (Time.timeSinceLevelLoad < 1f)
         {
             return;
         }

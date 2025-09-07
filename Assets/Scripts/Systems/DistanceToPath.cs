@@ -56,6 +56,11 @@ public class DistanceToPath : MonoBehaviour
         {
             return;
         }
+
+        if (Game.currentLevel.IsShowingCutscene)
+        {
+            return;
+        }
         
         Vector3 playerPosition = playerTransform.position;
         Vector3 nearestPoint = GetNearestPointOnSpline(playerPosition);
