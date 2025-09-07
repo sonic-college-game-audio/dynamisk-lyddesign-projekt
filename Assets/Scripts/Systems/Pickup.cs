@@ -96,7 +96,7 @@ public class Pickup : MonoBehaviour
         
         Vector3 velocity = characterController.velocity;
         float maxVelocity = 50f;
-        float acceleration = 10;
+        float acceleration = 20;
         float maxRadiansDelta = 0;
         Vector3 position = transform.position;
         
