@@ -408,15 +408,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnlockCutscene
   cameraTransform: {fileID: 135142597}
   cinematicBars: {fileID: 1527153199}
-  activeProgressIndicatorMaterial: {fileID: 2100000, guid: 6ea443a5df2d0fe4b9d51f0914c50cc7, type: 2}
+  activeUnlockStepMaterial: {fileID: 2100000, guid: 6ea443a5df2d0fe4b9d51f0914c50cc7, type: 2}
   openGateMaterial: {fileID: 2100000, guid: 6373c04de3676bb4198eb04d3be91eb0, type: 2}
   gateRenderer: {fileID: 203832310}
   gateCollider: {fileID: 203832309}
-  progressIndicators:
+  pickupVisualsPrefab: {fileID: 8438769349827300483, guid: cedf722a658d1e54ea33bbc5f3d56c53, type: 3}
+  unlockSteps:
   - {fileID: 1883447189}
   - {fileID: 1425253113}
   - {fileID: 927853845}
-  pickupVisualsPrefab: {fileID: 8438769349827300483, guid: cedf722a658d1e54ea33bbc5f3d56c53, type: 3}
   startDistance: -10
   targetDistance: -7
   duration: 3
@@ -451,13 +451,13 @@ MonoBehaviour:
       Data3: -762021491
       Data4: 324079671
     Path: event:/Gates/GateCutscene
-  progressIndicatorEvent:
+  unlockStepEvent:
     Guid:
       Data1: 1210824267
       Data2: 1109098050
       Data3: -267526746
       Data4: 1862305088
-    Path: event:/Gates/GateProgressIndicator
+    Path: event:/Gates/GateUnlockStep
   gateUnlocksEvent:
     Guid:
       Data1: -986219376
@@ -1463,7 +1463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 479768766}
   m_Layer: 0
-  m_Name: Progress Indicator (3)
+  m_Name: Unlock Step 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2069,7 +2069,7 @@ MonoBehaviour:
       Data2: 1206403941
       Data3: -2052268653
       Data4: 1546996283
-    Path: event:/Ambience
+    Path: event:/Game Flow/Ambience
   Event: 
   EventPlayTrigger: 3
   EventStopTrigger: 2
@@ -2231,7 +2231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 804104325}
   m_Layer: 0
-  m_Name: Progress Indicator (2)
+  m_Name: Unlock Step 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2304,7 +2304,7 @@ MonoBehaviour:
       Data2: 1130707972
       Data3: -419105882
       Data4: -1312475539
-    Path: event:/GoalObjectLoop
+    Path: event:/Pickup/GoalObjectLoop
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2
@@ -2680,7 +2680,7 @@ GameObject:
   - component: {fileID: 927853846}
   - component: {fileID: 927853845}
   m_Layer: 0
-  m_Name: Model (3)
+  m_Name: Unlock Spot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2767,7 +2767,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1126161932}
   m_Layer: 0
-  m_Name: Progress Indicator (1)
+  m_Name: Unlock Step 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3291,7 +3291,7 @@ GameObject:
   - component: {fileID: 1425253114}
   - component: {fileID: 1425253113}
   m_Layer: 0
-  m_Name: Model (2)
+  m_Name: Unlock Spot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4648,7 +4648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1874230718}
   m_Layer: 0
-  m_Name: Progress
+  m_Name: Steps
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4689,7 +4689,7 @@ GameObject:
   - component: {fileID: 1883447190}
   - component: {fileID: 1883447189}
   m_Layer: 0
-  m_Name: Model (1)
+  m_Name: Unlock Spot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

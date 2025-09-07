@@ -51,7 +51,7 @@ MonoBehaviour:
       Data2: 1079749830
       Data3: -2088876912
       Data4: 770275369
-    Path: event:/PickupLoop
+    Path: event:/Pickup/PickupLoop
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 2
@@ -166,14 +166,14 @@ MonoBehaviour:
       Data2: 1304077589
       Data3: -1241772877
       Data4: -2390273
-    Path: event:/Pickup
+    Path: event:/Pickup/Pickup
   startsFlyingEvent:
     Guid:
       Data1: -1007647984
       Data2: 1279808771
       Data3: -1817579337
       Data4: -1061780012
-    Path: event:/PickupStartsFlying
+    Path: event:/Pickup/PickupStartsFlying
   loopEmitter: {fileID: 8209414354517889143}
 --- !u!54 &3146548984858241184
 Rigidbody:

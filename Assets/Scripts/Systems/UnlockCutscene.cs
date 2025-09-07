@@ -6,12 +6,12 @@ public class UnlockCutscene : MonoBehaviour
     [Header("References")]
     public Transform cameraTransform;
     public GameObject cinematicBars;
-    public Material activeProgressIndicatorMaterial;
+    public Material activeUnlockStepMaterial;
     public Material openGateMaterial;
     public Renderer gateRenderer;
     public Collider gateCollider;
-    public Renderer[] progressIndicators;
     public GameObject pickupVisualsPrefab;
+    public Renderer[] unlockSteps;
     
     [Header("Settings")]
     public float startDistance;
@@ -21,7 +21,7 @@ public class UnlockCutscene : MonoBehaviour
 
     [Header("Audio")]
     public EventReference cutsceneEvent;
-    public EventReference progressIndicatorEvent;
+    public EventReference unlockStepEvent;
     public EventReference gateUnlocksEvent;
     
     private int pickupCount;
@@ -60,7 +60,7 @@ public class UnlockCutscene : MonoBehaviour
         Vector3 targetCameraLocalPosition = cameraTransform.localPosition;
         targetCameraLocalPosition.z = targetDistance;
 
-        GameObject pickupInstance = Instantiate(pickupVisualsPrefab, progressIndicators[pickupCount].transform.parent);
+        GameObject pickupInstance = Instantiate(pickupVisualsPrefab, unlockSteps[pickupCount].transform.parent);
         pickupInstance.transform.localPosition = Vector3.back * 5;
         pickupInstance.transform.localScale = Vector3.one * 0.5f;
         
@@ -70,10 +70,10 @@ public class UnlockCutscene : MonoBehaviour
             float pickupTime = Mathf.Clamp01(t * 2);
             pickupInstance.transform.localPosition = Vector3.Lerp(Vector3.back * 5, Vector3.zero, curve.Evaluate(pickupTime));
             
-            if (t > 0.6f && progressIndicators[pickupCount].sharedMaterial != activeProgressIndicatorMaterial)
+            if (t > 0.6f && unlockSteps[pickupCount].sharedMaterial != activeUnlockStepMaterial)
             {
-                RuntimeManager.PlayOneShot(progressIndicatorEvent);
-                progressIndicators[pickupCount].sharedMaterial = activeProgressIndicatorMaterial;
+                RuntimeManager.PlayOneShot(unlockStepEvent);
+                unlockSteps[pickupCount].sharedMaterial = activeUnlockStepMaterial;
                 
                 if (pickupCount == 2)
                 {
@@ -105,14 +105,14 @@ public class UnlockCutscene : MonoBehaviour
     {
         Material a = gateRenderer.sharedMaterial;
         Material b = openGateMaterial;
-        Material transition = Instantiate(a);
-        gateRenderer.sharedMaterial = transition;
+        Material transitionMaterial = Instantiate(a);
+        gateRenderer.sharedMaterial = transitionMaterial;
 
         float t = 0;
         while (t < 1)
         {
             t += Time.unscaledDeltaTime;
-            transition.Lerp(a, b, t);
+            transitionMaterial.Lerp(a, b, t);
             await Awaitable.NextFrameAsync();
         }
     }

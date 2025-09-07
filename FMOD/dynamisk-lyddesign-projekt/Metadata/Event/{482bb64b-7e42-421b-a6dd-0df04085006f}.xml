@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{482bb64b-7e42-421b-a6dd-0df04085006f}">
 		<property name="name">
-			<value>GateProgressIndicator</value>
+			<value>GateUnlockStep</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
