@@ -111,9 +111,12 @@ public class UnlockCutscene : MonoBehaviour
         float t = 0;
         while (t < 1)
         {
-            t += Time.unscaledDeltaTime;
-            transitionMaterial.Lerp(a, b, t);
+            transitionMaterial.Lerp(a, b, curve.Evaluate(t));
             await Awaitable.NextFrameAsync();
+            t += Time.unscaledDeltaTime / 1.5f;
         }
+
+        gateRenderer.sharedMaterial = openGateMaterial;
+        Destroy(transitionMaterial);
     }
 }
