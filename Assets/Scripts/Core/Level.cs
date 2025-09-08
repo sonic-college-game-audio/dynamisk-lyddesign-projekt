@@ -17,6 +17,7 @@ public class Level : MonoBehaviour
     private int numberOfPickupsDelivered;
     
     public bool IsShowingCutscene { get; private set; }
+    public int NumberOfPickups => pickups.Length;
     
     private void Awake()
     {
@@ -33,6 +34,11 @@ public class Level : MonoBehaviour
     {
         numberOfPickupsDelivered++;
         OnGateUnlockStep?.Invoke();
+
+        if (numberOfPickupsDelivered == NumberOfPickups)
+        {
+            FindFirstObjectByType<EndGate>().Open();
+        }
     }
 
     public void ReportEnterStartGate()

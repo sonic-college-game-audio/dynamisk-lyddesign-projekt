@@ -7,9 +7,6 @@ public class UnlockCutscene : MonoBehaviour
     public Transform cameraTransform;
     public GameObject cinematicBars;
     public Material activeUnlockStepMaterial;
-    public Material openGateMaterial;
-    public Renderer gateRenderer;
-    public Collider gateCollider;
     public GameObject pickupVisualsPrefab;
     public Renderer[] unlockSteps;
     
@@ -22,7 +19,6 @@ public class UnlockCutscene : MonoBehaviour
     [Header("Audio")]
     public EventReference cutsceneEvent;
     public EventReference unlockStepEvent;
-    public EventReference gateUnlocksEvent;
     
     private int pickupCount;
     
@@ -69,13 +65,6 @@ public class UnlockCutscene : MonoBehaviour
             {
                 RuntimeManager.PlayOneShot(unlockStepEvent);
                 unlockSteps[pickupCount].sharedMaterial = activeUnlockStepMaterial;
-                
-                if (pickupCount == 2)
-                {
-                    RuntimeManager.PlayOneShot(gateUnlocksEvent);
-                    _ = ChangeGateMaterialAsync();
-                    gateCollider.isTrigger = true;
-                }
             }
             
             t += Time.unscaledDeltaTime / duration;
@@ -85,7 +74,7 @@ public class UnlockCutscene : MonoBehaviour
         }
         
         pickupCount++;
-        if (pickupCount == 3)
+        if (pickupCount == Game.currentLevel.NumberOfPickups)
         {
             await AwaitableUtility.WaitForSecondsRealtimeAsync(1);
         }
@@ -94,24 +83,5 @@ public class UnlockCutscene : MonoBehaviour
         cinematicBars.SetActive(false);
         Game.EnablePlayerInput();
         Game.currentLevel.ReportCutsceneEnd();
-    }
-
-    private async Awaitable ChangeGateMaterialAsync()
-    {
-        Material a = gateRenderer.sharedMaterial;
-        Material b = openGateMaterial;
-        Material transitionMaterial = Instantiate(a);
-        gateRenderer.sharedMaterial = transitionMaterial;
-
-        float t = 0;
-        while (t < 1)
-        {
-            transitionMaterial.Lerp(a, b, curve.Evaluate(t));
-            await Awaitable.NextFrameAsync();
-            t += Time.unscaledDeltaTime / 1.5f;
-        }
-
-        gateRenderer.sharedMaterial = openGateMaterial;
-        Destroy(transitionMaterial);
     }
 }

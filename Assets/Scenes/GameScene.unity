@@ -409,9 +409,6 @@ MonoBehaviour:
   cameraTransform: {fileID: 135142597}
   cinematicBars: {fileID: 1527153199}
   activeUnlockStepMaterial: {fileID: 2100000, guid: 6ea443a5df2d0fe4b9d51f0914c50cc7, type: 2}
-  openGateMaterial: {fileID: 2100000, guid: 6373c04de3676bb4198eb04d3be91eb0, type: 2}
-  gateRenderer: {fileID: 203832310}
-  gateCollider: {fileID: 203832309}
   pickupVisualsPrefab: {fileID: 8438769349827300483, guid: cedf722a658d1e54ea33bbc5f3d56c53, type: 3}
   unlockSteps:
   - {fileID: 1883447189}
@@ -458,13 +455,6 @@ MonoBehaviour:
       Data3: -267526746
       Data4: 1862305088
     Path: event:/Gates/GateUnlockStep
-  gateUnlocksEvent:
-    Guid:
-      Data1: -986219376
-      Data2: 1267974092
-      Data3: 215403163
-      Data4: -1218817125
-    Path: event:/Gates/GateUnlocks
 --- !u!1001 &133263679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4387,6 +4377,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToPath: {fileID: 1441063066}
+  openGateMaterial: {fileID: 2100000, guid: 6373c04de3676bb4198eb04d3be91eb0, type: 2}
+  gateRenderer: {fileID: 203832310}
+  gateCollider: {fileID: 203832309}
+  materialTransitionCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  gateUnlocksEvent:
+    Guid:
+      Data1: -986219376
+      Data2: 1267974092
+      Data3: 215403163
+      Data4: -1218817125
+    Path: event:/Gates/GateUnlockS
 --- !u!1 &1721224216
 GameObject:
   m_ObjectHideFlags: 0
