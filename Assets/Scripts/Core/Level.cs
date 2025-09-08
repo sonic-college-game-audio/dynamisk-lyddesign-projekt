@@ -7,10 +7,14 @@ public class Level : MonoBehaviour
     public event Action OnPlayerWon;
     public event Action OnEnterStartGate;
     public event Action OnEnterEndGate;
-
+    public event Action OnGateUnlockStep;
+    
     public Transform playerTransform;
     public float waitAfterKilled;
     public float waitAfterWon;
+
+    private Pickup[] pickups;
+    private int numberOfPickupsDelivered;
     
     public bool IsShowingCutscene { get; private set; }
     
@@ -18,6 +22,17 @@ public class Level : MonoBehaviour
     {
         Game.currentLevel = this;
         playerTransform = GameObject.FindWithTag("Player").transform;
+        pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        foreach (Pickup pickup in pickups)
+        {
+            pickup.OnDelivered += OnPickupDelivered;
+        }
+    }
+
+    private void OnPickupDelivered()
+    {
+        numberOfPickupsDelivered++;
+        OnGateUnlockStep?.Invoke();
     }
 
     public void ReportEnterStartGate()

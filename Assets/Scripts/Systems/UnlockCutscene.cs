@@ -28,18 +28,13 @@ public class UnlockCutscene : MonoBehaviour
     
     private void Start()
     {
-        Pickup.OnArrivedAtGate += OnArrivedAtGate;
+        Game.currentLevel.OnGateUnlockStep += OnGateUnlockStep;
         
         cameraTransform.gameObject.SetActive(false);
         cinematicBars.SetActive(false);
     }
-    
-    private void OnDestroy()
-    {
-        Pickup.OnArrivedAtGate -= OnArrivedAtGate;
-    }
 
-    private void OnArrivedAtGate()
+    private void OnGateUnlockStep()
     {
         PlayCutsceneAsync().Run();
     }

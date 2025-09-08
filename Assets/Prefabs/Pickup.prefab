@@ -136,7 +136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trigger: {fileID: 3193016637737668477}
   offsetToPlayer: {x: 0, y: 1.2, z: 1.5}
-  animationCurve:
+  flyToGate: 1
+  pickupCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
@@ -156,6 +157,30 @@ MonoBehaviour:
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  disappearCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 1.4800913
+      outSlope: 1.4800913
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.037411526
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.7508188
+      outSlope: -0.7508188
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.09605664
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

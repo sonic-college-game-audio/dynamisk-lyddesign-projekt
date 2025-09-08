@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-    public static event Action OnArrivedAtGate;
+    public event Action OnDelivered;
     
     public Collider trigger;
     public Vector3 offsetToPlayer;
-    public AnimationCurve animationCurve;
+    public bool flyToGate;
+    public AnimationCurve pickupCurve;
+    public AnimationCurve disappearCurve;
 
     [Header("Audio")]
     public EventReference pickupEvent;
@@ -32,9 +34,17 @@ public class Pickup : MonoBehaviour
     {
         await AnimatePickupAsync();
         await KeepInFrontOfPlayerAsync();
-        await FlyTowardsEndGateAsync();
+
+        if (flyToGate)
+        {
+            await FlyTowardsEndGateAsync();
+        }
+        else
+        {
+            await DisappearAsync();
+        }
         
-        OnArrivedAtGate?.Invoke();
+        OnDelivered?.Invoke();
         Destroy(gameObject);
     }
 
@@ -50,10 +60,10 @@ public class Pickup : MonoBehaviour
         float t = 0;
         while (t < 1)
         {
-            float curveT = animationCurve.Evaluate(t);
-            Vector3 offset = Vector3.Lerp(startOffset, offsetToPlayer, animationCurve.Evaluate(curveT));
+            float curveT = pickupCurve.Evaluate(t);
+            Vector3 offset = Vector3.Lerp(startOffset, offsetToPlayer, curveT);
             transform.position = playerTransform.TransformPoint(offset);
-            transform.forward = Vector3.Slerp(startForward, transform.forward, animationCurve.Evaluate(curveT));
+            transform.forward = Vector3.Slerp(startForward, transform.forward, curveT);
             
             await Awaitable.NextFrameAsync();
 
@@ -136,6 +146,25 @@ public class Pickup : MonoBehaviour
             maxRadiansDelta += Time.unscaledDeltaTime / 60;
             
             await Awaitable.NextFrameAsync();
+        }
+    }
+
+    /// <summary>
+    /// Scale out the pickup
+    /// </summary>
+    private async Awaitable DisappearAsync()
+    {
+        Transform playerTransform = Game.currentLevel.playerTransform;
+        
+        float t = 0;
+        while (t < 1)
+        {
+            transform.position = playerTransform.TransformPoint(offsetToPlayer);
+            transform.forward = playerTransform.forward;
+            transform.localScale = Vector3.one * disappearCurve.Evaluate(t);
+            
+            await Awaitable.NextFrameAsync();
+            t += Time.unscaledDeltaTime / 0.25f;
         }
     }
 }
