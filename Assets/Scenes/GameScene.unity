@@ -4600,7 +4600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeParameter
   timeParameter: Time
-  maxTime: 120
+  time: 120
 --- !u!1001 &1793749619
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -56,6 +56,11 @@ public class DistanceToPath : MonoBehaviour
         {
             return;
         }
+        
+        if (!Game.currentLevel.PlayerIsAlive)
+        {
+            return;
+        }
 
         if (Game.currentLevel.IsShowingCutscene)
         {

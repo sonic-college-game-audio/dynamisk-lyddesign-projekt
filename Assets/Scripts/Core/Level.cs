@@ -18,10 +18,12 @@ public class Level : MonoBehaviour
     
     public bool IsShowingCutscene { get; private set; }
     public int NumberOfPickups => pickups.Length;
+    public bool PlayerIsAlive { get; private set; }
     
     private void Awake()
     {
         Game.currentLevel = this;
+        PlayerIsAlive = true;
         playerTransform = GameObject.FindWithTag("Player").transform;
         pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         foreach (Pickup pickup in pickups)
@@ -54,6 +56,7 @@ public class Level : MonoBehaviour
     
     public void ReportPlayerKilled()
     {
+        PlayerIsAlive = false;
         ReportPlayerKilledAsync().Run();
     }
 

@@ -34,10 +34,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+#if PLATFORM_STANDALONE_OSX
+        debugHovering = Keyboard.current.capsLockKey.isPressed;
+#else
         if (Keyboard.current.capsLockKey.wasPressedThisFrame)
         {
             debugHovering = !debugHovering;
         }
+#endif
 
         if (debugHovering)
         {

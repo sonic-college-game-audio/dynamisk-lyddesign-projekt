@@ -1,13 +1,13 @@
 using FMODUnity;
 using UnityEngine;
 
-public class TimeParameter : MonoBehaviour
+public class KillPlayerAfterTime : MonoBehaviour
 {
     [ParamRef]
     public string timeParameter;
-    public float maxTime;
+    public float time;
 
-    private float time;
+    private float timePassed;
     private bool shouldIncrementTimeParameter;
     
     private void Start()
@@ -24,14 +24,24 @@ public class TimeParameter : MonoBehaviour
 
     private void Update()
     {
-        if (!shouldIncrementTimeParameter)
+        if (!Game.currentLevel.PlayerIsAlive)
         {
             return;
         }
+        
+        if (shouldIncrementTimeParameter)
+        {
+            timePassed += Time.deltaTime;
+        }
 
-        time += Time.deltaTime;
-        float normalizedTime = Mathf.Clamp01(time / maxTime);
+        float normalizedTime = Mathf.Clamp01(timePassed / time);
         RuntimeManager.StudioSystem.setParameterByName(timeParameter, normalizedTime);
+
+        if (timePassed > time)
+        {
+            Game.currentLevel.ReportPlayerKilled();
+            shouldIncrementTimeParameter = false;
+        }
     }
 
     private void OnEnterStartGate()
