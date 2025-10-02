@@ -355,7 +355,7 @@ MonoBehaviour:
       Data2: 1158070508
       Data3: -1779473007
       Data4: 1299955663
-    Path: event:/3D_Sounds/Test#DObject
+    Path: event:/3D_Sounds/Test3DObject
   Event: 
   EventPlayTrigger: 1
   EventStopTrigger: 0
@@ -4537,7 +4537,7 @@ MonoBehaviour:
       Data2: 1267974092
       Data3: 215403163
       Data4: -1218817125
-    Path: event:/Gates/GateUnlockS
+    Path: event:/Gates/GateIsUnlocked
 --- !u!114 &1712434864
 MonoBehaviour:
   m_ObjectHideFlags: 0

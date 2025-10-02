@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{c1a03419-c0ec-4506-9165-ef95cfbf7b4d}">
 		<property name="name">
-			<value>Test#DObject</value>
+			<value>Test3DObject</value>
 		</property>
 		<property name="outputFormat">
 			<value>2</value>
