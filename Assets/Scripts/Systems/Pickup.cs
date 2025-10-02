@@ -54,7 +54,7 @@ public class Pickup : MonoBehaviour
     /// </summary>
     private async Awaitable AnimatePickupAsync()
     {
-        Transform playerTransform = Game.currentLevel.playerTransform;
+        Transform playerTransform = Game.currentLevel.PlayerTransform;
         Vector3 startOffset = playerTransform.InverseTransformPoint(transform.position);
         Vector3 startForward = transform.forward;
         
@@ -77,7 +77,7 @@ public class Pickup : MonoBehaviour
     /// </summary>
     private async Awaitable KeepInFrontOfPlayerAsync()
     {
-        Transform playerTransform = Game.currentLevel.playerTransform;
+        Transform playerTransform = Game.currentLevel.PlayerTransform;
         DistanceToPath distanceToPath = FindFirstObjectByType<DistanceToPath>();
         
         while (distanceToPath.NormalizedTimeOutsideSafeArea > 0)
@@ -155,7 +155,7 @@ public class Pickup : MonoBehaviour
     /// </summary>
     private async Awaitable DisappearAsync()
     {
-        Transform playerTransform = Game.currentLevel.playerTransform;
+        Transform playerTransform = Game.currentLevel.PlayerTransform;
         
         float t = 0;
         while (t < 1)

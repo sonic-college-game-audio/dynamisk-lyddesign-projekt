@@ -9,13 +9,13 @@ public class Level : MonoBehaviour
     public event Action OnEnterEndGate;
     public event Action<Pickup> OnGateUnlockStep;
     
-    public Transform playerTransform;
     public float waitAfterKilled;
     public float waitAfterWon;
 
     private Pickup[] pickups;
     private int numberOfPickupsDelivered;
     
+    public Transform PlayerTransform { get; private set; }
     public bool IsShowingCutscene { get; private set; }
     public int NumberOfPickups => pickups.Length;
     public bool PlayerIsAlive { get; private set; }
@@ -24,7 +24,7 @@ public class Level : MonoBehaviour
     {
         Game.currentLevel = this;
         PlayerIsAlive = true;
-        playerTransform = GameObject.FindWithTag("Player").transform;
+        PlayerTransform = GameObject.FindWithTag("Player").transform;
         pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         foreach (Pickup pickup in pickups)
         {
