@@ -7,7 +7,6 @@ public class UnlockCutscene : MonoBehaviour
     public Transform cameraTransform;
     public GameObject cinematicBars;
     public Material activeUnlockStepMaterial;
-    public GameObject pickupVisualsPrefab;
     public Renderer[] unlockSteps;
     
     [Header("Settings")]
@@ -33,12 +32,12 @@ public class UnlockCutscene : MonoBehaviour
         RuntimeManager.StudioSystem.setParameterByName(pickupsFoundParameter, 0);
     }
 
-    private void OnGateUnlockStep()
+    private void OnGateUnlockStep(Pickup pickup)
     {
-        PlayCutsceneAsync().Run();
+        PlayCutsceneAsync(pickup).Run();
     }
 
-    private async Awaitable PlayCutsceneAsync()
+    private async Awaitable PlayCutsceneAsync(Pickup pickup)
     {
         Game.currentLevel.ReportCutsceneStart();
         
@@ -54,7 +53,7 @@ public class UnlockCutscene : MonoBehaviour
         Vector3 targetCameraLocalPosition = cameraTransform.localPosition;
         targetCameraLocalPosition.z = targetDistance;
 
-        GameObject pickupInstance = Instantiate(pickupVisualsPrefab, unlockSteps[pickupCount].transform.parent);
+        GameObject pickupInstance = Instantiate(pickup.visuals, unlockSteps[pickupCount].transform.parent);
         pickupInstance.transform.localPosition = Vector3.back * 5;
         pickupInstance.transform.localScale = Vector3.one * 0.5f;
         

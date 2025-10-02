@@ -552,7 +552,6 @@ MonoBehaviour:
   cameraTransform: {fileID: 135142597}
   cinematicBars: {fileID: 1527153199}
   activeUnlockStepMaterial: {fileID: 2100000, guid: 6ea443a5df2d0fe4b9d51f0914c50cc7, type: 2}
-  pickupVisualsPrefab: {fileID: 8438769349827300483, guid: cedf722a658d1e54ea33bbc5f3d56c53, type: 3}
   unlockSteps:
   - {fileID: 1883447189}
   - {fileID: 1425253113}

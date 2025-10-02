@@ -7,7 +7,7 @@ public class Level : MonoBehaviour
     public event Action OnPlayerWon;
     public event Action OnEnterStartGate;
     public event Action OnEnterEndGate;
-    public event Action OnGateUnlockStep;
+    public event Action<Pickup> OnGateUnlockStep;
     
     public Transform playerTransform;
     public float waitAfterKilled;
@@ -28,14 +28,14 @@ public class Level : MonoBehaviour
         pickups = FindObjectsByType<Pickup>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         foreach (Pickup pickup in pickups)
         {
-            pickup.OnDelivered += OnPickupDelivered;
+            pickup.OnDelivered += () => OnPickupDelivered(pickup);
         }
     }
 
-    private void OnPickupDelivered()
+    private void OnPickupDelivered(Pickup pickup)
     {
         numberOfPickupsDelivered++;
-        OnGateUnlockStep?.Invoke();
+        OnGateUnlockStep?.Invoke(pickup);
 
         if (numberOfPickupsDelivered == NumberOfPickups)
         {

@@ -7,6 +7,7 @@ public class Pickup : MonoBehaviour
     public event Action OnDelivered;
     
     public Collider trigger;
+    public GameObject visuals;
     public Vector3 offsetToPlayer;
     public bool flyToGate;
     public AnimationCurve pickupCurve;
