@@ -1,3 +1,4 @@
+using System;
 using FMODUnity;
 using UnityEngine;
 
@@ -11,7 +12,12 @@ public class EndGate : MonoBehaviour
     public EventReference gateUnlocksEvent;
     
     private bool hasBeenTriggered;
-    
+
+    private void Start()
+    {
+        gateCollider.isTrigger = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (hasBeenTriggered)
