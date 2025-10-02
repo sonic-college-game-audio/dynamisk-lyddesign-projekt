@@ -1,3 +1,4 @@
+using System;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,13 +9,14 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController characterController;
     
     [Header("Movement")]
-    public float movementSpeed;
-    public float smoothingTime;
-
+    public float movementSpeed = 6;
+    public float smoothingTime = 0.08f;
+    public float debugSprintSpeed = 32;
+    
     [Header("Jumping")]
-    public float jumpHeight;
-    public float ascentGravityMultiplier;
-    public float descentGravityMultiplier;
+    public float jumpHeight = 2;
+    public float ascentGravityMultiplier = 1.5f;
+    public float descentGravityMultiplier = 2;
 
     [Header("Audio")]
     public EventReference jumpEvent;
@@ -25,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 smoothingVelocity;
     private Vector3 verticalVelocity;
     private bool debugHovering;
+
+    private void Reset()
+    {
+        characterController = GetComponent<CharacterController>();
+    }
 
     private void Start()
     {
@@ -43,16 +50,14 @@ public class PlayerMovement : MonoBehaviour
         }
 #endif
 
-        if (debugHovering)
+        Vector3 motion = CalculateMovement();
+        
+        if (!debugHovering)
         {
-            Vector3 motion = CalculateMovement() * 10;
-            characterController.Move(motion * Time.deltaTime);
+            motion += CalculateJump();
         }
-        else
-        {
-            Vector3 motion = CalculateMovement() + CalculateJump();
-            characterController.Move(motion * Time.deltaTime);
-        }
+        
+        characterController.Move(motion * Time.deltaTime);
     }
 
     private Vector3 CalculateMovement()
@@ -62,8 +67,9 @@ public class PlayerMovement : MonoBehaviour
         
         Vector3 direction = transform.TransformDirection(smoothedInput.x, 0, smoothedInput.y);
         direction = Vector3.ClampMagnitude(direction, 1);
-        
-        Vector3 motion = direction * movementSpeed;
+
+        float speed = debugHovering ? debugSprintSpeed : movementSpeed;
+        Vector3 motion = direction * speed;
         return motion;
     }
 

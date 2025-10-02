@@ -1691,6 +1691,7 @@ MonoBehaviour:
   characterController: {fileID: 499705293}
   movementSpeed: 6
   smoothingTime: 0.08
+  debugSprintSpeed: 32
   jumpHeight: 2
   ascentGravityMultiplier: 1.5
   descentGravityMultiplier: 2
