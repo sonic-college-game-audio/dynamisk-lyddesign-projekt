@@ -18,7 +18,6 @@ public class UnlockCutscene : MonoBehaviour
     [Header("Audio")]
     public EventReference cutsceneEvent;
     public EventReference unlockStepEvent;
-    [ParamRef] public string pickupsFoundParameter;
     
     private int pickupCount;
     
@@ -28,8 +27,6 @@ public class UnlockCutscene : MonoBehaviour
         
         cameraTransform.gameObject.SetActive(false);
         cinematicBars.SetActive(false);
-        
-        RuntimeManager.StudioSystem.setParameterByName(pickupsFoundParameter, 0);
     }
 
     private void OnGateUnlockStep(Pickup pickup)
@@ -76,9 +73,6 @@ public class UnlockCutscene : MonoBehaviour
         }
         
         pickupCount++;
-
-        float pickupsFoundParameterValue = (float) pickupCount / Game.currentLevel.NumberOfPickups;
-        RuntimeManager.StudioSystem.setParameterByName(pickupsFoundParameter, pickupsFoundParameterValue);
         
         if (pickupCount == Game.currentLevel.NumberOfPickups)
         {
