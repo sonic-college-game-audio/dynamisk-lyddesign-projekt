@@ -1,4 +1,3 @@
-using System;
 using FMODUnity;
 using UnityEngine;
 
@@ -9,6 +8,9 @@ public class EndGate : MonoBehaviour
     public Renderer gateRenderer;
     public Collider gateCollider;
     public AnimationCurve materialTransitionCurve;
+
+    [Header("Audio")]
+    public EventReference enterEndGateEvent;
     public EventReference gateUnlocksEvent;
     
     private bool hasBeenTriggered;
@@ -29,6 +31,8 @@ public class EndGate : MonoBehaviour
         {
             return;
         }
+        
+        RuntimeManager.PlayOneShot(enterEndGateEvent);
         
         Game.currentLevel.ReportEnterEndGate();
         distanceToPath.enabled = false;
