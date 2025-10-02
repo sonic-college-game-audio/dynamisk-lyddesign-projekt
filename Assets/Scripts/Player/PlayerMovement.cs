@@ -91,4 +91,23 @@ public class PlayerMovement : MonoBehaviour
 
         return verticalVelocity;
     }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!hit.rigidbody || hit.rigidbody.isKinematic)
+        {
+            return;
+        }
+
+        if (hit.moveDirection.y < -0.3f)
+        {
+            return;
+        }
+        
+        const float power = 5;
+        Vector3 force = -hit.normal * hit.moveLength * power;
+        force.y = 0;
+        
+        hit.rigidbody.AddForceAtPosition(force, hit.point, ForceMode.Impulse);
+    }
 }
