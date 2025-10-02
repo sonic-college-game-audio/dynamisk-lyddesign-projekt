@@ -666,6 +666,7 @@ GameObject:
   - component: {fileID: 135142600}
   - component: {fileID: 135142599}
   - component: {fileID: 135142598}
+  - component: {fileID: 135142601}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -703,7 +704,7 @@ MonoBehaviour:
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
+  m_CameraType: 1
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
@@ -791,6 +792,19 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &135142601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135142596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce4c5745474949f5889654758d6e5b44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OverlayCamera
+  camera: {fileID: 135142600}
 --- !u!23 &203832310 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8302220654486838665, guid: 51411a507bec15d43aef563c03e4aef5, type: 3}

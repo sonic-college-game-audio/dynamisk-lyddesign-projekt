@@ -31,6 +31,11 @@ public static class CameraManager
 
     public static void RegisterOverlayCamera(Camera camera)
     {
+        camera.allowMSAA = MainCamera.allowMSAA;
+        camera.allowDynamicResolution = MainCamera.allowDynamicResolution;
+        camera.targetTexture = MainCamera.targetTexture;
+        camera.clearFlags = MainCamera.clearFlags;
+        
         cameraStack.Add(camera);
         ApplyCameraStackToMainCamera();
     }
