@@ -24,7 +24,7 @@ public class PlayerKilledHandler : MonoBehaviour
     {
         if (killedSnapshotEventInstance.isValid())
         {
-            killedSnapshotEventInstance.stop(STOP_MODE.ALLOWFADEOUT);
+            killedSnapshotEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             killedSnapshotEventInstance.release();
         }
     }
