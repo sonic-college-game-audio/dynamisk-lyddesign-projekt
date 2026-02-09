@@ -1,4 +1,3 @@
-using System;
 using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -77,21 +76,26 @@ public class PlayerMovement : MonoBehaviour
     {
         if (characterController.isGrounded && jumpInputAction.WasPerformedThisFrame())
         {
-            if (jumpInputAction.WasPerformedThisFrame())
-            {
-                verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
-                RuntimeManager.PlayOneShot(jumpEvent);
-            }
+            // Jump!
+            verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
+            RuntimeManager.PlayOneShot(jumpEvent);
         }
         else
         {
-            if (verticalVelocity.y < 0)
+            if (verticalVelocity.y > 0)
             {
+                // We are ascending
+                verticalVelocity += Physics.gravity * (ascentGravityMultiplier * Time.deltaTime);
+            }
+            else if (!characterController.isGrounded)
+            {
+                // We are descending
                 verticalVelocity += Physics.gravity * (descentGravityMultiplier * Time.deltaTime);
             }
             else
             {
-                verticalVelocity += Physics.gravity * (ascentGravityMultiplier * Time.deltaTime);
+                // The controller is experiencing the force of gravity but without acceleration
+                verticalVelocity = Physics.gravity * Time.deltaTime;
             }
         }
 
