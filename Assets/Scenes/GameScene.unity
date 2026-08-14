@@ -598,6 +598,7 @@ MonoBehaviour:
       Data3: -267526746
       Data4: 1862305088
     Path: event:/Gates/GateUnlockStep
+  pickupsFoundParameter: PickupsFound
 --- !u!1001 &133263679
 PrefabInstance:
   m_ObjectHideFlags: 0
