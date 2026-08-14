@@ -536,8 +536,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../dynamisk-lyddesign-projekt/FMOD/dynamisk-lyddesign-projekt/dynamisk-lyddesign-projekt.fspro
-  sourceBankPath: ../../dynamisk-lyddesign-projekt/FMOD/dynamisk-lyddesign-projekt/Build
+  sourceProjectPath: FMOD/dynamisk-lyddesign-projekt/dynamisk-lyddesign-projekt.fspro
+  sourceBankPath: FMOD/dynamisk-lyddesign-projekt/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 1
   ShowBankRefreshWindow: 1
