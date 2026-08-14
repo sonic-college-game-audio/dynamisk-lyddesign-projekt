@@ -536,8 +536,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: FMOD/dynamisk-lyddesign-projekt/dynamisk-lyddesign-projekt.fspro
-  sourceBankPath: FMOD/dynamisk-lyddesign-projekt/Build
+  sourceProjectPath: ../../dynamisk-lyddesign-projekt/FMOD/dynamisk-lyddesign-projekt/dynamisk-lyddesign-projekt.fspro
+  sourceBankPath: ../../dynamisk-lyddesign-projekt/FMOD/dynamisk-lyddesign-projekt/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 1
   ShowBankRefreshWindow: 1
@@ -549,6 +549,7 @@ MonoBehaviour:
   TargetAssetPath: FMODBanks
   TargetBankFolder: 
   EventLinkage: 0
+  SerializeGUIDsOnly: 0
   LoggingLevel: 2
   SpeakerModeSettings: []
   SampleRateSettings: []
@@ -572,7 +573,7 @@ MonoBehaviour:
   EnableErrorCallback: 0
   SharedLibraryUpdateStage: 0
   SharedLibraryTimeSinceStart: 0
-  CurrentVersion: 131848
+  CurrentVersion: 131860
   HideSetupWizard: 1
   LastEventReferenceScanVersion: 131848
   Platforms:

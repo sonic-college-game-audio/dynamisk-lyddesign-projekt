@@ -10,7 +10,6 @@ public class FootstepsAudio : MonoBehaviour
 
     private float distanceSinceLastFootstep;
     private Vector3 lastPosition;
-    private bool wasGroundedLastFrame;
 
     private void Reset()
     {
@@ -20,7 +19,6 @@ public class FootstepsAudio : MonoBehaviour
     private void Start()
     {
         lastPosition = transform.position;
-        wasGroundedLastFrame = true;
     }
 
     private void Update()
@@ -58,11 +56,9 @@ public class FootstepsAudio : MonoBehaviour
             return;
         }
         
-        if (characterController.isGrounded && !wasGroundedLastFrame)
+        if (characterController.isGrounded && characterController.velocity.y < -0.5f)
         {
             RuntimeManager.PlayOneShot(landingEvent);
         }
-
-        wasGroundedLastFrame = characterController.isGrounded;
     }
 }

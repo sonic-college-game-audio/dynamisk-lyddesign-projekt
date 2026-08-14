@@ -66,6 +66,9 @@ namespace FMODUnity
         private static byte[] eventSet3DAttributes;
         private static byte[] systemGetBus;
 
+        // Arbitrary value to ensure no collisions with any user windows
+        const int WINDOWID = 0x00FDFD01;
+
 #if UNITY_URP_EXIST
         private GameObject vrDebugOverlay;
         private RectTransform vrDebugRectTransform;
@@ -107,7 +110,7 @@ namespace FMODUnity
             {
                 RuntimeUtils.DebugLogWarning(string.Format(("[FMOD] {0} : {1}"), (string)func, (string)message));
             }
-            else if (flags == FMOD.DEBUG_FLAGS.LOG)
+            else if (flags == FMOD.DEBUG_FLAGS.LOG || flags == FMOD.DEBUG_FLAGS.TYPE_VIRTUAL)
             {
                 RuntimeUtils.DebugLog(string.Format(("[FMOD] {0} : {1}"), (string)func, (string)message));
             }
@@ -184,7 +187,7 @@ namespace FMODUnity
                         RuntimeUtils.EnforceLibraryOrder();
 
                         #if UNITY_OPENHARMONY && !UNITY_EDITOR
-                        OpenHarmonyJSObject openHarmonyJSObject = new OpenHarmonyJSObject("ClassFMOD" + FMOD.VERSION.dllSuffix);
+                        OpenHarmonyJSObject openHarmonyJSObject = new OpenHarmonyJSObject("ClassFMOD" + FMOD.VERSION.suffix);
                         openHarmonyJSObject.Call("init");
                         #endif
 
@@ -423,9 +426,14 @@ retry:
 
         private int GetChannelCountForFormat(CodecType format)
         {
-            CodecChannelCount channelCount = currentPlatform.CodecChannels.Find(x => x.format == format);
-
-            return channelCount == null ? 0 : Math.Min(channelCount.channels, 256);
+            foreach (CodecChannelCount ccc in currentPlatform.CodecChannels)
+            {
+                if (ccc.format == format)
+                {
+                    return Math.Min(ccc.channels, 256);
+                }
+            }
+            return 0;
         }
 
         private static void SetThreadAffinities(Platform platform)
@@ -572,7 +580,16 @@ retry:
 
         private static AttachedInstance FindOrAddAttachedInstance(FMOD.Studio.EventInstance instance, Transform transform, FMOD.ATTRIBUTES_3D attributes)
         {
-            AttachedInstance attachedInstance = Instance.attachedInstances.Find(x => x.instance.handle == instance.handle);
+            AttachedInstance attachedInstance = null;
+            foreach(AttachedInstance attached in Instance.attachedInstances)
+            {
+                if (attached.instance.handle == instance.handle)
+                {
+                    attachedInstance = attached;
+                    break;
+                }
+            }
+
             if (attachedInstance == null)
             {
                 attachedInstance = new AttachedInstance();
@@ -663,7 +680,7 @@ retry:
                 debugStyle.fontSize = currentPlatform.OverlayFontSize;
                 if (studioSystem.isValid() && isOverlayEnabled)
                 {
-                    windowRect = GUI.Window(GetInstanceID(), windowRect, DrawDebugOverlay, "FMOD Studio Debug", debugStyle);
+                    windowRect = GUI.Window(WINDOWID, windowRect, DrawDebugOverlay, "FMOD Studio Debug", debugStyle);
                 }
             }
             else
@@ -980,7 +997,7 @@ retry:
             LoadBank(asset, loadSamples, asset.name);
         }
 
-        private static void LoadBank(TextAsset asset, bool loadSamples, string bankId)
+        private static unsafe void LoadBank(TextAsset asset, bool loadSamples, string bankId)
         {
             if (Instance.loadedBanks.ContainsKey(bankId))
             {
@@ -998,7 +1015,12 @@ retry:
 #endif
 
                 LoadedBank loadedBank = new LoadedBank();
-                FMOD.RESULT loadResult = Instance.studioSystem.loadBankMemory(asset.bytes, FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out loadedBank.Bank);
+                FMOD.RESULT loadResult = FMOD.RESULT.ERR_BADCOMMAND;
+                using (var nativeArray = asset.GetData<byte>())
+                {
+                    IntPtr pointer = (IntPtr)Unity.Collections.LowLevel.Unsafe.NativeArrayUnsafeUtility.GetUnsafeReadOnlyPtr(nativeArray);
+                    loadResult = Instance.studioSystem.loadBankMemory(pointer, nativeArray.Length, FMOD.Studio.LOAD_BANK_FLAGS.NORMAL, out loadedBank.Bank);
+                }
                 Instance.RegisterLoadedBank(loadedBank, bankId, bankId, loadSamples, loadResult);
             }
         }
@@ -1013,7 +1035,7 @@ retry:
             else
             {
                 Instance.loadingBanksRef++;
-                assetReference.LoadAssetAsync<TextAsset>().Completed += (obj) =>
+                Addressables.LoadAssetAsync<TextAsset>(assetReference).Completed += (obj) =>
                 {
                     if (!obj.IsValid())
                     {
@@ -1031,7 +1053,7 @@ retry:
                         completionCallback();
                     }
 
-                    assetReference.ReleaseAsset();
+                    Addressables.Release(obj);
                 };
 
             }
