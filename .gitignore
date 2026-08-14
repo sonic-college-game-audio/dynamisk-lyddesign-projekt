@@ -167,3 +167,5 @@ fmod_editor.log
 
 .cache/
 *.bank
+
+*/.DS_Store
