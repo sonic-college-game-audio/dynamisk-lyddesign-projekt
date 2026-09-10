@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 verticalVelocity;
     private bool debugHovering;
 
+    public bool IsJumping { get; private set; }
+    
     private void Reset()
     {
         characterController = GetComponent<CharacterController>();
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInputAction = InputSystem.actions.FindAction("Move");
         jumpInputAction = InputSystem.actions.FindAction("Jump");
+        characterController.minMoveDistance = 0;
     }
 
     private void Update()
@@ -57,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
         }
         
         characterController.Move(motion * Time.deltaTime);
+
+        if (IsJumping && characterController.isGrounded)
+        {
+            IsJumping = false;
+        }
     }
 
     private Vector3 CalculateMovement()
@@ -79,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
             // Jump!
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
             RuntimeManager.PlayOneShot(jumpEvent);
+            IsJumping = true;
         }
         else
         {
