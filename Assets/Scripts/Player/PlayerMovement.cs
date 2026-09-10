@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 2;
     public float ascentGravityMultiplier = 1.5f;
     public float descentGravityMultiplier = 2;
+    public float jumpBufferDuration = 0.125f;
+    public float coyoteTime = 0.125f;
 
     [Header("Audio")]
     public EventReference jumpEvent;
@@ -26,6 +28,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 smoothingVelocity;
     private Vector3 verticalVelocity;
     private bool debugHovering;
+    private float lastJumpInput = float.NegativeInfinity;
+    private float lastGroundedTime;
 
     public bool IsJumping { get; private set; }
     
@@ -52,6 +56,12 @@ public class PlayerMovement : MonoBehaviour
         }
 #endif
 
+        if (characterController.isGrounded)
+        {
+            IsJumping = false;
+            lastGroundedTime = Time.time;
+        }
+        
         Vector3 motion = CalculateMovement();
         
         if (!debugHovering)
@@ -60,11 +70,6 @@ public class PlayerMovement : MonoBehaviour
         }
         
         characterController.Move(motion * Time.deltaTime);
-
-        if (IsJumping && characterController.isGrounded)
-        {
-            IsJumping = false;
-        }
     }
 
     private Vector3 CalculateMovement()
@@ -82,7 +87,15 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 CalculateJump()
     {
-        if (characterController.isGrounded && jumpInputAction.WasPerformedThisFrame())
+        if (jumpInputAction.WasPerformedThisFrame())
+        {
+            lastJumpInput = Time.time;
+        }
+
+        float timeSinceLastJumpInput = lastJumpInput < 0 ? float.PositiveInfinity : Time.time - lastJumpInput;
+        float timeSinceLastGrounded = Time.time - lastGroundedTime;
+        
+        if (!IsJumping && timeSinceLastGrounded < coyoteTime && timeSinceLastJumpInput < jumpBufferDuration)
         {
             // Jump!
             verticalVelocity.y = Mathf.Sqrt(jumpHeight * -2 * Physics.gravity.y);
