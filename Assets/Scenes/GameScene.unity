@@ -1701,6 +1701,8 @@ MonoBehaviour:
   jumpHeight: 2
   ascentGravityMultiplier: 1.5
   descentGravityMultiplier: 2
+  jumpBufferDuration: 0.125
+  coyoteTime: 0.125
   jumpEvent:
     Guid:
       Data1: -1311838970
@@ -1735,6 +1737,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterController: {fileID: 499705293}
+  playerMovement: {fileID: 499705294}
   distanceBetweenFootsteps: 2.2
   footstepEvent:
     Guid:
@@ -3283,13 +3286,20 @@ MonoBehaviour:
   characterController: {fileID: 499705293}
   cameraRigidbody: {fileID: 1666603167}
   fallForce: 0.1
-  deathEvent:
+  killedEvent:
     Guid:
       Data1: 1943199091
       Data2: 1338971816
       Data3: 1693486505
       Data4: 1628947298
     Path: event:/Game Flow/Killed
+  timeRanOutEvent:
+    Guid:
+      Data1: -703301622
+      Data2: 1098479159
+      Data3: 1921775495
+      Data4: 317791155
+    Path: event:/Game Flow/TimeRanOut
   killedSnapshot:
     Guid:
       Data1: 1663152874

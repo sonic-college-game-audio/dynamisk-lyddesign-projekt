@@ -39,7 +39,7 @@ public class KillPlayerAfterTime : MonoBehaviour
 
         if (timePassed > time)
         {
-            Game.currentLevel.ReportPlayerKilled();
+            Game.currentLevel.ReportPlayerKilled(Level.CauseOfDeath.TimeRanOut);
             shouldIncrementTimeParameter = false;
         }
     }

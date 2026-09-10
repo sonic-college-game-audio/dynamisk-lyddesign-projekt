@@ -9,7 +9,8 @@ public class PlayerKilledHandler : MonoBehaviour
     public float fallForce;
 
     [Header("Audio")]
-    public EventReference deathEvent;
+    public EventReference killedEvent;
+    public EventReference timeRanOutEvent;
     public EventReference killedSnapshot;
 
     private EventInstance killedSnapshotEventInstance;
@@ -29,9 +30,18 @@ public class PlayerKilledHandler : MonoBehaviour
         }
     }
 
-    private void OnPlayerKilled()
+    private void OnPlayerKilled(Level.CauseOfDeath causeOfDeath)
     {
-        RuntimeManager.PlayOneShot(deathEvent);
+        switch (causeOfDeath)
+        {
+            case Level.CauseOfDeath.Killed:
+                RuntimeManager.PlayOneShot(killedEvent);
+                break;
+            case Level.CauseOfDeath.TimeRanOut:
+                RuntimeManager.PlayOneShot(timeRanOutEvent);
+                break;
+        }
+        
         killedSnapshotEventInstance = RuntimeManager.CreateInstance(killedSnapshot);
         killedSnapshotEventInstance.start();
 

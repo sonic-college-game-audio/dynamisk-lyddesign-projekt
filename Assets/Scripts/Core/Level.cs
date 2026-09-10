@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
-    public event Action OnPlayerKilled;
+    public event Action<CauseOfDeath> OnPlayerKilled;
     public event Action OnPlayerWon;
     public event Action OnEnterStartGate;
     public event Action OnEnterEndGate;
@@ -54,10 +54,10 @@ public class Level : MonoBehaviour
         ReportPlayerWonAsync().Run();
     }
     
-    public void ReportPlayerKilled()
+    public void ReportPlayerKilled(CauseOfDeath causeOfDeath)
     {
         PlayerIsAlive = false;
-        ReportPlayerKilledAsync().Run();
+        ReportPlayerKilledAsync(causeOfDeath).Run();
     }
 
     public void ReportCutsceneStart()
@@ -70,17 +70,23 @@ public class Level : MonoBehaviour
         IsShowingCutscene = false;
     }
     
-    private async Awaitable ReportPlayerKilledAsync()
+    private async Awaitable ReportPlayerKilledAsync(CauseOfDeath causeOfDeath)
     {
-        OnPlayerKilled?.Invoke();
+        OnPlayerKilled?.Invoke(causeOfDeath);
         await Awaitable.WaitForSecondsAsync(waitAfterKilled);
         Game.ReloadLevel();
     }
-    
+
     private async Awaitable ReportPlayerWonAsync()
     {
         OnPlayerWon?.Invoke();
         await Awaitable.WaitForSecondsAsync(waitAfterWon);
         Game.ReloadLevel();
+    }
+
+    public enum CauseOfDeath
+    {
+        TimeRanOut,
+        Killed
     }
 }

@@ -85,7 +85,7 @@ public class DistanceToPath : MonoBehaviour
             
             if (timeOutsideSafeArea > maxTimeOutsideSafeArea)
             {
-                Game.currentLevel.ReportPlayerKilled();
+                Game.currentLevel.ReportPlayerKilled(Level.CauseOfDeath.Killed);
                 isTracking = false;
             }
         }
